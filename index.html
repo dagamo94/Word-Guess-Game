@@ -3,19 +3,85 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <title>Psychic Game</title>
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>Word Guess game</title>
+
 </head>
 
+<body class="bg-white">
+
+    <header class="text-dark bg-white border-bottom border-dark">
+        <h1 class="display-4">minimal hangman.</h1>
+    </header>
 
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+
+                <div class="jumbotron bg-white">
+
+                    <h2 class="display-4" id="any-key-start">press any key to start</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <p class="lead">wins / </p>
+                            <span id="wins-text">0</span>
+                            <hr class="my-4">
+
+                            <p class="lead">guesses left / </p>
+                            <span id="guesses-left-text">0</span>
+                            <hr class="my-4">
+
+                        </div>
+
+                        <div class="col-md-7 offset-1">
+                            <p class="lead"> current word /</p>
+                            <span id="current-word-text">placeholder</span>
+                            <hr class="my-4" />
+
+                            <p class="lead"> already guessed /</p>
+                            <span id="guessed-text">type type type</span>
+                            <hr class="my-4" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md">
+                            <a class="btn btn-secondary btn-lg bg-white text-dark text-monospace" id="done-button"
+                                href="https://unsplash.com/" role="button">done with this</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- LINK TO JS FILE -->
     <script src="assets/javascript/game.js"></script>
+
+</body>
+
+
 
 </html>
