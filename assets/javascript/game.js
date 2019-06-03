@@ -3,6 +3,7 @@
 var wins = 0;
 var losses = 0;
 var firstPress = false;
+var showLetter = false;
 
 var keysPressed = [];
 var validInputs = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -20,13 +21,14 @@ function resetVariables() {
     tempCurrentWord = currentWord;
     guesses = guessesLeft();
     lettersInCurrWordCount = 0;
+    $("#guesses-left-text").text(guesses);
     $("#current-word-text").text(initialWriteToHTML("current-word-text",currentWord));
     $("#guessed-text").text("");
 }
 
 function letterStillAvailable() {
-    for (var i = 0; i < keysPressed.length; i++) {
-        if (hang) {
+    for (var i = 0; i < currentWord.length; i++) {
+        if (currentWord.length > tempCurrentWord) {
             return true;
         } else {
             return false;
@@ -122,9 +124,12 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
 
         $("#guesses-left-text").text(guesses);
 
-    } else if (validInputs.includes(userInput) && guesses > 1 && currentWord.includes(userInput)) {
+    } else if (validInputs.includes(userInput) && guesses > 1 && currentWord.includes(userInput) && lettersInCurrWordCount < currentWord.length) {
 
         //code that compares guesses to individual letters in 'currentWord' and determines if you won
+        lettersInCurrWordCount++;
+
+        
 
         //code that displays the correctly guessed letter underneath "current /" in HTML site
 
@@ -132,7 +137,7 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
         $("#guessed-text").append(userInput + ", ");
         console.log($("#guessed-text"));
 
-    } else if (validInputs.includes(userInput) && guesses > 0 && keysPressed.includes(userInput)) {
+    } else if (validInputs.includes(userInput) && guesses > 1 && keysPressed.includes(userInput)) {
         alert("You have already used that letter and it's not part of the word");
     } else if(validInputs.includes(userInput)){
         losses++;
@@ -146,13 +151,14 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
     console.log("Current word: " + currentWord);
     console.log("Temp word: " + tempCurrentWord);
     console.log("Current word's length: " + currentWord.length);
-    console.log("Guesses left: " + guessesLeft());
+    console.log("Number of right guesses: " + lettersInCurrWordCount);
+    console.log("Guesses left: " + guesses);
     console.log("Guesses left by percentage: " + guessesLeftPercentage());
     console.log("Guesses thus far: " + keysPressed);
-    for (var i = 0; i < currentWord.length; i++) {
-        console.log("CUrrent word broken into individual letters: " + currentWord[i]);
+    // for (var i = 0; i < currentWord.length; i++) {
+    //     console.log("CUrrent word broken into individual letters: " + currentWord[i]);
 
-    }
+    // }
 
     console.log("\n");
 }
