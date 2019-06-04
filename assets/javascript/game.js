@@ -13,6 +13,7 @@ var currentWord = randWordChoice();
 var guesses = guessesLeft();
 var lettersInCurrWordCount = 0;
 var rightLettertracker = [];
+var letterTrackerFull = false;
 var tempCurrentWord = "";
 
 function resetVariables() {
@@ -21,6 +22,8 @@ function resetVariables() {
     tempCurrentWord = currentWord;
     guesses = guessesLeft();
     lettersInCurrWordCount = 0;
+    rightLettertracker = [];
+    letterTrackerFull = false;
     $("#guesses-left-text").text(guesses);
     $("#current-word-text").text(initialWriteToHTML("current-word-text",currentWord));
     $("#guessed-text").text("");
@@ -39,7 +42,7 @@ function letterStillAvailable() {
 }
 
 function guessesLeft() { //depends on the word's length, guesses left equals current word's length plus 5
-    return currentWord.length + 5;
+    return currentWord.length + 3;
 }
 
 function guessesLeftPercentage() { //depends on the word's length, guesses left equals current word's length plus 50% of its length
@@ -63,39 +66,6 @@ function initialWriteToHTML(replace, newText) {          //will add the right nu
         $("#" + replace).append(text);
     }
 }
-
-// document.onkeyup = function (event) {
-//     userInput = event.key;
-
-//     if (validInputs.includes(userInput)) {
-//         if (currentWord.includes(userInput) && guesses > 1 && letterStillAvailable(userInput) === true) {
-//             keysPressed.push(userInput);
-//             lettersInCurrWordCount++;
-
-//             //letterStillAvailable();
-
-//             if (lettersInCurrWordCount === currentWord.length) {
-//                 wins++;
-//                 resetVariables();
-//             }
-
-//             //print the userinput to the right spot of the current word display in HTML
-//         } else if (!currentWord.includes(userInput) && guesses > 1) {
-//             guesses--;
-//         } else {
-//             alert("you lost");
-//         }
-//     } else {
-//         alert("Please press a valid key (a value from a-z)");
-//     }
-
-//     console.log("Random word choice working test: " + randWordChoice());
-//     console.log("Current word: " + currentWord);
-//     console.log("Current word's length: " + currentWord.length);
-//     console.log("Guesses left: " + guessesLeft());
-//     console.log("Guesses left by percentage: " + guessesLeftPercentage());
-
-// }
 
 
 document.onkeyup = function (event) { //only meant to temporariy test my functions
@@ -124,22 +94,50 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
 
         $("#guesses-left-text").text(guesses);
 
-    } else if (validInputs.includes(userInput) && guesses > 1 && currentWord.includes(userInput) && lettersInCurrWordCount < currentWord.length) {
+    } else if (validInputs.includes(userInput) && guesses > 1 && currentWord.includes(userInput)) {
 
         //code that compares guesses to individual letters in 'currentWord' and determines if you won
-        lettersInCurrWordCount++;
+        if(!letterTrackerFull){
 
-        
+            for(var i =0; i < currentWord.length; i++){
+                rightLettertracker.push(currentWord[i]);
+                
+                
+                console.log("Split word: " + rightLettertracker);
+            }
+            letterTrackerFull = true; 
+        }
 
+        if(rightLettertracker.includes(userInput)){
+            lettersInCurrWordCount++;
+            for(var i = 0; i < rightLettertracker.length; i++){
+                if(rightLettertracker[i] === userInput){
+                    rightLettertracker.splice(i, 1);
+                    i--;
+
+                }
+            }
+        }
+        $("#guessed-text").append(userInput + ", ");
+        console.log("rightlettertracker length with removals: " + rightLettertracker.length);
+
+        if(rightLettertracker.length === 0){
+            wins++;
+
+            $("#wins-text").text(wins);
+
+            $("#guessed-text").append(userInput + ", ");
+            alert("you won!");
+            resetVariables();
+        }
         //code that displays the correctly guessed letter underneath "current /" in HTML site
 
 
-        $("#guessed-text").append(userInput + ", ");
         console.log($("#guessed-text"));
 
-    } else if (validInputs.includes(userInput) && guesses > 1 && keysPressed.includes(userInput)) {
+    } else if (validInputs.includes(userInput) && guesses > 1 && keysPressed.indexOf(userInput)<0) {
         alert("You have already used that letter and it's not part of the word");
-    } else if(validInputs.includes(userInput)){
+    } else if(validInputs.includes(userInput) && guesses === 0){
         losses++;
         resetVariables();
     }else {
@@ -147,13 +145,13 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
     }
 
 
-    console.log("Random word choice working test: " + randWordChoice());
+    // console.log("Random word choice working test: " + randWordChoice());
     console.log("Current word: " + currentWord);
-    console.log("Temp word: " + tempCurrentWord);
+    // console.log("Temp word: " + tempCurrentWord);
     console.log("Current word's length: " + currentWord.length);
     console.log("Number of right guesses: " + lettersInCurrWordCount);
     console.log("Guesses left: " + guesses);
-    console.log("Guesses left by percentage: " + guessesLeftPercentage());
+    // console.log("Guesses left by percentage: " + guessesLeftPercentage());
     console.log("Guesses thus far: " + keysPressed);
     // for (var i = 0; i < currentWord.length; i++) {
     //     console.log("CUrrent word broken into individual letters: " + currentWord[i]);
