@@ -25,20 +25,8 @@ function resetVariables() {
     rightLettertracker = [];
     letterTrackerFull = false;
     $("#guesses-left-text").text(guesses);
-    $("#current-word-text").text(initialWriteToHTML("current-word-text",currentWord));
+    $("#current-word-text").text(initialWriteToHTML("current-word-text", currentWord));
     $("#guessed-text").text("");
-}
-
-function letterStillAvailable() {
-    for (var i = 0; i < currentWord.length; i++) {
-        if (currentWord.length > tempCurrentWord) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
 }
 
 function guessesLeft() { //depends on the word's length, guesses left equals current word's length plus 5
@@ -54,16 +42,16 @@ function randWordChoice() {
 }
 
 function initialWriteToHTML(replace, newText) {          //will add the right number of dashes to visually indicate the legth of the word to be guessed to the user
-    var text = newText;
+    var letter = newText;
     $("#" + replace).html("");                    //clears out previously stored value in the element of parameter replace
     for (var i = 0; i < newText.length; i++) {
-        text = $("<span>");
-
+        letter = $("<span>");
+        var htmlDataValue = letter[i];
         // newText.addClass("cust-" + newText[i]);
-        text.attr("data-letter", text[i]);
-        text.text("_ ");
+        letter.attr("data-letter", htmlDataValue);
+        letter.text("_ ");
 
-        $("#" + replace).append(text);
+        $("#" + replace).append(letter);
     }
 }
 
@@ -73,7 +61,19 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
 
     if (firstPress === false) {
         firstPress = true;
-        initialWriteToHTML("current-word-text", currentWord);
+        //initialWriteToHTML("current-word-text", currentWord);
+
+        var letter = currentWord;
+        $("#current-word-text").html("");                    //clears out previously stored value in the element of parameter replace
+        for (var i = 0; i < currentWord.length; i++) {
+            letter = $("<span>");
+            var htmlDataValue = letter[i];
+            // newText.addClass("cust-" + newText[i]);
+            letter.attr("data-letter", htmlDataValue);
+            letter.text("_ ");
+
+            $("#current-word-text").append(letter);
+        }
 
         tempCurrentWord = currentWord;
 
@@ -88,30 +88,29 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
 
         keysPressed.push(userInput);
 
-
         $("#guessed-text").append(userInput + ", ");
         console.log($("#guessed-text"));
 
         $("#guesses-left-text").text(guesses);
 
     } else if (validInputs.includes(userInput) && guesses > 1 && currentWord.includes(userInput)) {
+        keysPressed.push(userInput);
 
         //code that compares guesses to individual letters in 'currentWord' and determines if you won
-        if(!letterTrackerFull){
+        if (!letterTrackerFull) {
 
-            for(var i =0; i < currentWord.length; i++){
+            for (var i = 0; i < currentWord.length; i++) {
                 rightLettertracker.push(currentWord[i]);
-                
-                
+
                 console.log("Split word: " + rightLettertracker);
             }
-            letterTrackerFull = true; 
+            letterTrackerFull = true;
         }
 
-        if(rightLettertracker.includes(userInput)){
+        if (rightLettertracker.includes(userInput)) {
             lettersInCurrWordCount++;
-            for(var i = 0; i < rightLettertracker.length; i++){
-                if(rightLettertracker[i] === userInput){
+            for (var i = 0; i < rightLettertracker.length; i++) {
+                if (rightLettertracker[i] === userInput) {
                     rightLettertracker.splice(i, 1);
                     i--;
 
@@ -121,7 +120,7 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
         $("#guessed-text").append(userInput + ", ");
         console.log("rightlettertracker length with removals: " + rightLettertracker.length);
 
-        if(rightLettertracker.length === 0){
+        if (rightLettertracker.length === 0) {
             wins++;
 
             $("#wins-text").text(wins);
@@ -135,13 +134,15 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
 
         console.log($("#guessed-text"));
 
-    } else if (validInputs.includes(userInput) && guesses > 1 && keysPressed.indexOf(userInput)<0) {
+    } else if (validInputs.includes(userInput) && guesses > 1 && keysPressed.indexOf(userInput) < 0) {
         alert("You have already used that letter and it's not part of the word");
-    } else if(validInputs.includes(userInput) && guesses === 0){
+
+    } else if (validInputs.includes(userInput) && guesses === 1) {
         losses++;
         resetVariables();
-    }else {
-        alert("Please press a key from a-z");
+
+    } else {
+        alert("You have already used that letter and it's not part of the word or press a valid key from a-z");
     }
 
 
