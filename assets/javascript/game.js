@@ -61,19 +61,19 @@ document.onkeyup = function (event) { //only meant to temporariy test my functio
 
     if (firstPress === false) {
         firstPress = true;
-        //initialWriteToHTML("current-word-text", currentWord);
+        initialWriteToHTML("current-word-text", currentWord);
 
-        var letter = currentWord;
-        $("#current-word-text").html("");                    //clears out previously stored value in the element of parameter replace
-        for (var i = 0; i < currentWord.length; i++) {
-            letter = $("<span>");
-            var htmlDataValue = letter[i];
-            // newText.addClass("cust-" + newText[i]);
-            letter.attr("data-letter", htmlDataValue);
-            letter.text("_ ");
+        //var letter = currentWord;
+        // $("#current-word-text").html("");                    //clears out previously stored value in the element of parameter replace
+        // for (var i = 0; i < currentWord.length; i++) {
+        //     letter = $("<span>");
+        //     var htmlDataValue = letter[i];
+        //     // newText.addClass("cust-" + newText[i]);
+        //     letter.attr("data-letter", htmlDataValue);
+        //     letter.text("_ ");
 
-            $("#current-word-text").append(letter);
-        }
+        //     $("#current-word-text").append(letter);
+        // }
 
         tempCurrentWord = currentWord;
 
